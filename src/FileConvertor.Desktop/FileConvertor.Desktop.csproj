@@ -5,6 +5,33 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>mconverter-file-converter.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Images\document.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="mconverter-file-converter.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Images\document.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Dtos\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Conholdate.Total" Version="23.8.0" />
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
+    <PackageReference Include="Spire.Office" Version="8.9.2" />
+    <PackageReference Include="Spire.PDF" Version="9.9.9" />
+    <PackageReference Include="Spire.XLS" Version="13.9.1" />
+    <PackageReference Include="ToastNotifications" Version="2.5.1" />
+    <PackageReference Include="ToastNotifications.Messages" Version="2.5.1" />
+  </ItemGroup>
 
 </Project>
