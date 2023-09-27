@@ -13,19 +13,24 @@ public class PdfConvertorService : IPdfConvertorService
 
     public async Task<(bool Result, string path)> PdfToExcelAsync(ConvertorDto dto)
     {
-        PdfDocument pdf = new PdfDocument();
-        pdf.LoadFromFile(dto.fileName);
-        pdf.SaveToFile(dto.fileType, FileFormat.XLSX);
+        await Task.Run(() =>
+        {
+            PdfDocument pdf = new PdfDocument();
+            pdf.LoadFromFile(dto.fileName);
+            pdf.SaveToFile(dto.fileType, FileFormat.XLSX);
+        });
 
         return (Result: true, path: dto.fileType);
-
     }
 
     public async Task<(bool Result, string path)> PdfToWordAsync(ConvertorDto dto)
     {
-        PdfDocument pdf = new PdfDocument();
-        pdf.LoadFromFile(dto.fileName);
-        pdf.SaveToFile(dto.fileType, FileFormat.DOCX);
+        await Task.Run(() =>
+        {
+            PdfDocument pdf = new PdfDocument();
+            pdf.LoadFromFile(dto.fileName);
+            pdf.SaveToFile(dto.fileType, FileFormat.DOCX);
+        });
 
         return (Result: true, path: dto.fileType);
     }

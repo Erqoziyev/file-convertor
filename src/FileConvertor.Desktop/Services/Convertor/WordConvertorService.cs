@@ -1,12 +1,12 @@
 ﻿using FileConvertor.Desktop.Dtos.Convertor;
 using FileConvertor.Desktop.Interfaces.Convertor;
-using System.Drawing;
-using System.Threading.Tasks;
 using Spire.Doc;
 using Spire.Doc.Documents;
 using Spire.Doc.Fields;
 using Spire.Xls;
+using System;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace FileConvertor.Desktop.Services.Convertor;
 
@@ -18,37 +18,40 @@ public class WordConvertorService : IWordConvertorService
 
     public async Task<(bool Result, string path)> WordToExcelAsync(ConvertorDto dto)
     {
-        var doc = new Spire.Doc.Document();
-        doc.LoadFromFile(dto.fileName);
-        var wb = new Workbook();
-        wb.Worksheets.Clear();
-        Worksheet worksheet = wb.CreateEmptySheet("WordToExcel");
-        int row = 1;
-        int column = 1;
-        foreach (Section section in doc.Sections)
+        await Task.Run(() =>
         {
-            foreach (DocumentObject documentObject in section.Body.ChildObjects)
+            var doc = new Spire.Doc.Document();
+            doc.LoadFromFile(dto.fileName);
+            var wb = new Workbook();
+            wb.Worksheets.Clear();
+            Worksheet worksheet = wb.CreateEmptySheet("WordToExcel");
+            int row = 1;
+            int column = 1;
+            foreach (Section section in doc.Sections)
             {
-                if (documentObject is Paragraph)
+                foreach (DocumentObject documentObject in section.Body.ChildObjects)
                 {
-                    CellRange cell = worksheet.Range[row, column];
-                    Paragraph paragraph = documentObject as Paragraph;
-                    CopyTextAndStyle(cell, paragraph);
-                    row++;
-                }
-                if (documentObject is Table)
-                {
-                    Table table = documentObject as Table;
-                    int currentRow = ExportTableInExcel(worksheet, row, table);
-                    row = currentRow;
+                    if (documentObject is Paragraph)
+                    {
+                        CellRange cell = worksheet.Range[row, column];
+                        Paragraph paragraph = documentObject as Paragraph;
+                        CopyTextAndStyle(cell, paragraph);
+                        row++;
+                    }
+                    if (documentObject is Table)
+                    {
+                        Table table = documentObject as Table;
+                        int currentRow = ExportTableInExcel(worksheet, row, table);
+                        row = currentRow;
+                    }
                 }
             }
-        }
-        worksheet.AllocatedRange.AutoFitRows();
-        worksheet.AllocatedRange.AutoFitColumns();
-        worksheet.AllocatedRange.IsWrapText = true;
-        wb.SaveToFile(dto.fileType, ExcelVersion.Version2013);
-
+            worksheet.AllocatedRange.AutoFitRows();
+            worksheet.AllocatedRange.AutoFitColumns();
+            worksheet.AllocatedRange.IsWrapText = true;
+            wb.SaveToFile(dto.fileType, ExcelVersion.Version2013);
+        });
+        
         return (Result: true, path: dto.fileType);
     }
 
@@ -145,12 +148,15 @@ public class WordConvertorService : IWordConvertorService
 
     public async Task<(bool Result, string path)> WordToPdfAsync(ConvertorDto dto)
     {
-        using (var converter = new GroupDocs.Conversion.Converter(dto.fileName))
+        await Task.Run(() =>
         {
-            var convertOptions = converter.GetPossibleConversions()["pdf"].ConvertOptions;
+            using (var converter = new GroupDocs.Conversion.Converter(dto.fileName))
+            {
+                var convertOptions = converter.GetPossibleConversions()["pdf"].ConvertOptions;
 
-            converter.Convert(dto.fileType, convertOptions);
-        }
+                converter.Convert(dto.fileType, convertOptions);
+            }
+        });
 
         return (Result: true, path: dto.fileType);
     }

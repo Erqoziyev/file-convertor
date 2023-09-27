@@ -14,22 +14,28 @@ public class ExcelConvertorService : IExcelConvertorService
 
     public async Task<(bool Result, string path)> ExcelToPdfAsync(ConvertorDto dto)
     {
-        using (var converter = new GroupDocs.Conversion.Converter(dto.fileName))
+        await Task.Run(() =>
         {
-            var options = new PdfConvertOptions();
-            converter.Convert(dto.fileType, options);
-        }
+            using (var converter = new GroupDocs.Conversion.Converter(dto.fileName))
+            {
+                var options = new PdfConvertOptions();
+                converter.Convert(dto.fileType, options);
+            }
+        });
 
         return (Result: true, path: dto.fileType);
     }
     public async Task<(bool Result, string path)> ExcelToWordAsync(ConvertorDto dto)
     {
-        using (var converter = new GroupDocs.Conversion.Converter(dto.fileName))
+        await Task.Run(() =>
         {
-            var options = new WordProcessingConvertOptions();
-            converter.Convert(dto.fileType, options);
-        }
-
+            using (var converter = new GroupDocs.Conversion.Converter(dto.fileName))
+            {
+                var options = new WordProcessingConvertOptions();
+                converter.Convert(dto.fileType, options);
+            }
+        });
+        
         return (Result: true, path: dto.fileType);
     }
 }

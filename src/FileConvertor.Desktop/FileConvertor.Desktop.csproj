@@ -30,8 +30,6 @@
     <PackageReference Include="Spire.Office" Version="8.9.2" />
     <PackageReference Include="Spire.PDF" Version="9.9.9" />
     <PackageReference Include="Spire.XLS" Version="13.9.1" />
-    <PackageReference Include="ToastNotifications" Version="2.5.1" />
-    <PackageReference Include="ToastNotifications.Messages" Version="2.5.1" />
   </ItemGroup>
 
 </Project>

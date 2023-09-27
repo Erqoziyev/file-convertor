@@ -7,10 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using ToastNotifications;
-using ToastNotifications.Lifetime;
-using ToastNotifications.Messages;
-using ToastNotifications.Position;
 
 namespace FileConvertor.Desktop;
 
@@ -54,6 +50,7 @@ public partial class MainWindow : Window
                     dto.fileName = path;
                     dto.fileType = saveFileDialog.FileName;
                     _service.ConvertAsync(dto);
+
                     loader.Visibility = Visibility.Collapsed;
                     MessageBox.Show("Siz tanlagan fayl PDF ga o'tkazib saqlandi");
                     txtFileName.Text = "";
@@ -99,7 +96,7 @@ public partial class MainWindow : Window
                     ConvertorDto dto = new ConvertorDto();
                     dto.fileName = path;
                     dto.fileType = saveFileDialog.FileName;
-                    var res = _service.ConvertAsync(dto);
+                    _service.ConvertAsync(dto);
                     loader.Visibility = Visibility.Collapsed;
                     MessageBox.Show("Siz tanlagan fayl DOCUMENT ga o'tkazib saqlandi");
                     txtFileName.Text = "";

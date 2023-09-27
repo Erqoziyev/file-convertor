@@ -8,7 +8,6 @@
             <ResourceDictionary.MergedDictionaries>
 
                 <ResourceDictionary Source="/Styles/ButtonStyles.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/ToastNotifications.Messages;component/Themes/Default.xaml" />
 
             </ResourceDictionary.MergedDictionaries>
 
